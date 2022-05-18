@@ -13,7 +13,7 @@ pipeline {
         {
             steps{
                 script {
-                   docker.withRegistry("https://232195323397.dkr.ecr.ap-northeast-1.amazonaws.com/demo-nodejs", "ecr:ap-northeast-1:aws-issdu-credential")
+                   docker.withRegistry("https://232195323397.dkr.ecr.ap-northeast-1.amazonaws.com", "ecr:ap-northeast-1:aws-issdu-credential")
                    def appImage = docker.build("${env.IMAGE_NAME}:${env.BUILD_ID}")
                 }
             }
