@@ -3,3 +3,12 @@
 # Amazon ECS Workshop
 
 This is part of an Amazon ECS workshop at https://ecsworkshop.com
+
+# 實作說明
+* Jenkinsfile 實作
+   * 整合 jenkins build docker image 
+   * push image to AWS ECR
+
+# 來源 
+* source Fork 來源 : [ecsdemo-nodejs](https://github.com/brentley/ecsdemo-nodejs)
+* 參老來源 : [INSTALL ARGO CD](https://www.eksworkshop.com/intermediate/290_argocd/install/)
