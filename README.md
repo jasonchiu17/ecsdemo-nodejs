@@ -4,6 +4,11 @@
 
 This is part of an Amazon ECS workshop at https://ecsworkshop.com
 
+# 用途
+
+  * For Jenkins 整合測試
+  * For ArgoCD 整合測試
+  
 # 實作說明
 * Jenkinsfile 實作
    * 整合 jenkins build docker image 
