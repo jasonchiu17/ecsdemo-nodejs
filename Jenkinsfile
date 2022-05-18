@@ -10,12 +10,11 @@ node {
         stage('docker build')
         {
             
-            steps{
-                script{ 
-                    customImage = docker.build("${env.IMAGE_NAME}:${env.BUILD_ID}")
+            steps {
+                script { 
+                    def customImage = docker.build("${env.IMAGE_NAME}:${env.BUILD_ID}")
                 }
             }
         }
-    }
-    
+    }    
 }
