@@ -22,9 +22,7 @@ pipeline {
         stage('push aws ecr')
         {
             steps{
-                script {
-  
-                }
+                echo "Hello"
             }
         }
     }    
