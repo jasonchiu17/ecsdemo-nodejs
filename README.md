@@ -5,15 +5,14 @@
 This is part of an Amazon ECS workshop at https://ecsworkshop.com
 
 # 用途
-
   * For Jenkins 整合測試
   * For ArgoCD 整合測試
-  * Github webhook jenkins with secret 
-  
+   
 # 實作說明
 * Jenkinsfile 實作
+   * 使用 Agent jenkins-slave
    * 整合 jenkins build docker image 
-   * push image to AWS ECR
+   * Push image to AWS ECR
 
 # 來源 
 * source Fork 來源 : [ecsdemo-nodejs](https://github.com/brentley/ecsdemo-nodejs)
