@@ -14,10 +14,9 @@ pipeline {
             steps{
                 script {
                     appImage = docker.build("${env.IMAGE_NAME}:${env.BUILD_ID}")
-                    
+                     checkpoint 'Completed Build'
                 }
-            }
-            checkpoint 'Completed Build'
+            }           
         }
   
         stage('push to AWS ecr')
