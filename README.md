@@ -8,6 +8,7 @@ This is part of an Amazon ECS workshop at https://ecsworkshop.com
 
   * For Jenkins 整合測試
   * For ArgoCD 整合測試
+  * Github webhook jenkins with secret 
   
 # 實作說明
 * Jenkinsfile 實作
