@@ -3,18 +3,19 @@ pipeline {
     agent { label 'jenkins-slave'}
     environment { 
         IMAGE_NAME = 'demo-nodejs'
+        MAIN_VER = '1.0'
     }
     stages {
         stage('build info'){
             steps {
-                echo "build ${env.IMAGE_NAME}:${env.BUILD_NUMBER}"
+                echo "build ${env.IMAGE_NAME}:${env.MAIN_VER}.${env.BUILD_NUMBER}"
             }
         }
         stage('build image')
         {
             steps{
                 script {
-                    appImage = docker.build("${env.IMAGE_NAME}:${env.BUILD_ID}")                    
+                    appImage = docker.build("${env.IMAGE_NAME}:${env.MAIN_VER}.${env.BUILD_ID}")                    
                 }
             }           
         }
