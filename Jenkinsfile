@@ -1,5 +1,6 @@
 pipeline {
-    agent any
+    //agent any
+    agent { label 'jenkins-slave'}
     environment { 
         IMAGE_NAME = 'demo-nodejs'
     }
