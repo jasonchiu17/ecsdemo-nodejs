@@ -13,8 +13,7 @@ pipeline {
         {
             steps{
                 script {
-                    appImage = docker.build("${env.IMAGE_NAME}:${env.BUILD_ID}")
-                     checkpoint 'Completed Build'
+                    appImage = docker.build("${env.IMAGE_NAME}:${env.BUILD_ID}")                    
                 }
             }           
         }
