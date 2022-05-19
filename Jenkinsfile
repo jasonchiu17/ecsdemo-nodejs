@@ -9,7 +9,7 @@ pipeline {
                 echo "build ${env.IMAGE_NAME}:${env.BUILD_NUMBER}"
             }
         }
-        stage('docker build')
+        stage('build image')
         {
             steps{
                 script {
@@ -18,9 +18,13 @@ pipeline {
                 }
             }
         }
-        stage('push aws ecr')
+  
+        stage('push to AWS ecr')
         {
-            steps{
+            steps {
+                 checkpoint 'Completed Build'
+            }
+            steps {
                 script {
                     docker.withRegistry('https://232195323397.dkr.ecr.ap-northeast-1.amazonaws.com', 'ecr:ap-northeast-1:aws-issdu-credential') {
                         appImage.push()
