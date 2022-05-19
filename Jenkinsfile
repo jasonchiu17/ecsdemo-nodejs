@@ -17,13 +17,12 @@ pipeline {
                     
                 }
             }
+            checkpoint 'Completed Build'
         }
   
         stage('push to AWS ecr')
         {
-            steps {
-                 checkpoint 'Completed Build'
-            }
+
             steps {
                 script {
                     docker.withRegistry('https://232195323397.dkr.ecr.ap-northeast-1.amazonaws.com', 'ecr:ap-northeast-1:aws-issdu-credential') {
