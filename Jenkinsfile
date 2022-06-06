@@ -8,14 +8,14 @@ pipeline {
     stages {
         stage('build info'){
             steps {
-                echo "build ${env.IMAGE_NAME}:${env.MAIN_VER}.${env.BUILD_NUMBER}"
+                echo "build ${IMAGE_NAME}:${MAIN_VER}.${env.BUILD_NUMBER}"
             }
         }
         stage('build image')
         {
             steps{
                 script {
-                    appImage = docker.build("${env.IMAGE_NAME}:${env.MAIN_VER}.${env.BUILD_ID}")                    
+                    appImage = docker.build("${IMAGE_NAME}:${MAIN_VER}.${env.BUILD_NUMBER}")                    
                 }
             }           
         }
