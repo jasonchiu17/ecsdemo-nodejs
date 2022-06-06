@@ -18,8 +18,7 @@ pipeline {
                     appImage = docker.build("${IMAGE_NAME}:${MAIN_VER}.${env.BUILD_NUMBER}")                    
                 }
             }           
-        }
-  
+        }  
         stage('push to AWS ecr')
         {
             steps {
@@ -30,5 +29,14 @@ pipeline {
                 }
             }
         }
+        stage{'deploy')
+        {
+            when {
+                expression { BRANCH_NAME ==~ 'master' }
+            }
+            steps {
+                echo 'Deploying'
+            }
+        }        
     }    
 }
