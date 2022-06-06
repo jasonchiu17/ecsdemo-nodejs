@@ -3,7 +3,7 @@ pipeline {
   // agent none
   agent { label 'jenkins-slave'}
   parameters { 
-      choice(name: 'VERSION', choices: ['1.0.45', '1.0.46', '1.0.47'], description: 'deploy version') 
+      choice(name: 'VERSION', choices: ['1.0.2', '1.0.3', '1.0.4'], description: 'deploy version') 
        
   }
   stages {
