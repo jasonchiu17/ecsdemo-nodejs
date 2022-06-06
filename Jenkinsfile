@@ -22,7 +22,6 @@ pipeline {
   
         stage('push to AWS ecr')
         {
-
             steps {
                 script {
                     docker.withRegistry('https://232195323397.dkr.ecr.ap-northeast-1.amazonaws.com', 'ecr:ap-northeast-1:aws-issdu-credential') {
