@@ -1,0 +1,26 @@
+def firstName = null
+pipeline {
+  // agent none
+  agent { label 'jenkins-slave'}
+  parameters { 
+      choice(name: 'VERSION', choices: ['1.0.45', '1.0.46', '1.0.47'], description: 'deploy version') 
+       
+  }
+  stages {
+    stage('deploy info') {
+        steps {
+            echo "deploy 232195323397.dkr.ecr.ap-northeast-1.amazonaws.com/demo-nodejs:${params.VERSION}"
+        }
+    }
+    stage('update demo-nodejs image version') {
+      steps {
+        sh """
+            kubectl get nodes
+            kubectl set image deployment ecsdemo-nodejs ecsdemo-nodejs=232195323397.dkr.ecr.ap-northeast-1.amazonaws.com/demo-nodejs:${params.VERSION} --record
+            kubectl get deployment -o wide | grep ecsdemo
+            kubectl rollout status deployment ecsdemo-nodejs
+        """
+      }
+    }
+  }
+}
