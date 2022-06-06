@@ -42,7 +42,9 @@ pipeline {
             }
             post {
                 success {
-                   kubectl rollout status deployment ecsdemo-nodejs
+                    sh """
+                       kubectl rollout status deployment ecsdemo-nodejs
+                    """
                 }
            }
         }        
