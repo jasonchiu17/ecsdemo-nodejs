@@ -31,7 +31,9 @@ pipeline {
         }
         stage('deploy')
         {
-            when { ${env.BRANCH_NAME} == 'master' }            
+            when { 
+               expression { BRANCH_NAME ==~ /(production|staging)/ }
+            }            
             steps {
                 echo 'Deploying'
             }
