@@ -32,7 +32,7 @@ pipeline {
         stage('deploy')
         {
             when { 
-               expression { BRANCH_NAME == 'master' }
+               expression { BRANCH_NAME == 'develop' }
             }            
             steps {
                 echo 'Deploying'
