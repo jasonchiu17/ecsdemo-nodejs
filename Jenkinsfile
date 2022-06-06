@@ -29,13 +29,13 @@ pipeline {
                 }
             }
         }
-        stage{'deploy')
+        stage('deploy')
         {
             when {
                 expression { BRANCH_NAME == 'master' }
             }
             steps {
-                echo 'Deploying to statge'
+                echo 'Deploying'
             }
         }        
     }    
