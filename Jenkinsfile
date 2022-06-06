@@ -32,7 +32,7 @@ pipeline {
         stage('deploy')
         {
             when { 
-               expression { BRANCH_AAA == true }
+               expression { ${env.BRANCH_NAME} == 'master' }
             }            
             steps {
                 echo 'Deploying'
