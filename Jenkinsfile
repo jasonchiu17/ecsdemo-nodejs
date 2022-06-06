@@ -36,7 +36,9 @@ pipeline {
             }            
             steps {
                 echo 'Deploying to dev EKS'
-                kubectl set image deployment ecsdemo-nodejs ecsdemo-nodejs=232195323397.dkr.ecr.ap-northeast-1.amazonaws.com/${IMAGE_NAME}:${MAIN_VER}.${env.BUILD_NUMBER} --record
+                sh """
+                    kubectl set image deployment ecsdemo-nodejs ecsdemo-nodejs=232195323397.dkr.ecr.ap-northeast-1.amazonaws.com/${IMAGE_NAME}:${MAIN_VER}.${env.BUILD_NUMBER} --record
+                """"
             }
             post {
                 success {
