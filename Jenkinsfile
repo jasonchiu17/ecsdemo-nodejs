@@ -29,14 +29,20 @@ pipeline {
                 }
             }
         }
-        stage('deploy')
+        stage('deploy to dev EKS')
         {
             when { 
                expression { BRANCH_NAME == 'develop' }
             }            
             steps {
-                echo 'Deploying'
+                echo 'Deploying to dev EKS'
+                kubectl set image deployment ecsdemo-nodejs ecsdemo-nodejs=232195323397.dkr.ecr.ap-northeast-1.amazonaws.com/${IMAGE_NAME}:${MAIN_VER}.${env.BUILD_NUMBER} --record
             }
+            post {
+                success {
+                   kubectl rollout status deployment ecsdemo-nodejs
+                }
+           }
         }        
     }    
 }
