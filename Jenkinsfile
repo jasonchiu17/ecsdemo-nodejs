@@ -46,6 +46,7 @@ pipeline {
                 success {
                     sh """
                         kubectl rollout status deployment ecsdemo-nodejs
+                        kubectl get deploy/ecsdemo-nodejs -o jsonpath={..image}
                     """
                 }
             }
