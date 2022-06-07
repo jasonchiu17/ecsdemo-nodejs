@@ -53,10 +53,7 @@ pipeline {
                         kubectl get deploy/ecsdemo-nodejs -o jsonpath={..image}
 
                     """
-                }
-            }
-            post {
-                success {
+
                     sh """
                     while [ "\$(kubectl get po -l "ecsdemo-nodejs" -o jsonpath='{range .items[?(@.spec.containers[0].image=="${IMAGE_REGISTRY}/${IMAGE_NAME}:${MAIN_VER}.${env.BUILD_NUMBER}")]}{.status.phase}{"\\n"}{end}' | grep Running | head -n 1)" != "Running" ]; do
                     echo Waiting for pod to be ready...
