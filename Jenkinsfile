@@ -12,6 +12,18 @@ pipeline {
                 echo "build ${IMAGE_NAME}:${MAIN_VER}.${env.BUILD_NUMBER}"
             }
         }
+        stage('SonarQuge analysis')
+        {
+            steps{
+                sh """
+                /home/sonar-scanner/bin/sonar-scanner \
+                -Dsonar.projectKey=demo-nodejs \
+                -Dsonar.sources=./server.js \
+                -Dsonar.host.url=http://jenkins.issdu-poc.com:9000 \
+                -Dsonar.login=52df3370e1896f58b3adb822cdb2f0350c8ac383
+                """
+            }
+        }
         stage('build image')
         {
             steps{
