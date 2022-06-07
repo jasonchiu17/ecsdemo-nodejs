@@ -12,7 +12,7 @@ pipeline {
                 echo "build ${IMAGE_NAME}:${MAIN_VER}.${env.BUILD_NUMBER}"
             }
         }
-        stage('SonarQuge analysis')
+        stage('SonarQube analysis')
         {
             steps{
                 sh """
@@ -24,7 +24,7 @@ pipeline {
                 """
             }
         }
-        stage('build image')
+        stage('Build image')
         {
             steps{
                 script {
@@ -32,7 +32,7 @@ pipeline {
                 }
             }           
         }  
-        stage('push image to AWS ECR')
+        stage('Push image to AWS ECR')
         {
             steps {
                 script {
@@ -42,7 +42,7 @@ pipeline {
                 }
             }
         }
-        stage('deploy to dev EKS')
+        stage('Deploy to AWS EKS')
         {
             /*
             when { 
