@@ -40,7 +40,7 @@ pipeline {
             steps {
                 echo 'Deploying to dev EKS'
                 sh """
-                    kubectl set image deployment ecsdemo-nodejs ${IMAGE_REGISTRY}/${IMAGE_NAME}:${MAIN_VER}.${env.BUILD_NUMBER} --record
+                    kubectl set image deployment ecsdemo-nodejs ecsdemo-nodejs=${IMAGE_REGISTRY}/${IMAGE_NAME}:${MAIN_VER}.${env.BUILD_NUMBER} --record
                 """
             }
             post {
