@@ -17,13 +17,15 @@ pipeline {
             steps{
                 script{
                     def scannerHome = tool 'my-sonarqube-scanner'
+                    withSonarQubeEnv('poc_sonarqube') {
+                        sh """
+                        ${scannerHome}/bin/sonar-scanner \
+                        -Dsonar.projectKey=demo-nodejs \
+                        -Dsonar.sources=./server.js
+                        """
+                    }
                 }
-                withSonarQubeEnv('poc_sonarqube') {
-                    sh """
-                    ${scannerHome}/bin/sonar-scanner \
-                    -Dsonar.projectKey=demo-nodejs \
-                    -Dsonar.sources=./server.js
-                    """
+   
                 /*
                 sh """
                 /home/sonar-scanner/bin/sonar-scanner \
@@ -32,8 +34,7 @@ pipeline {
                 -Dsonar.host.url=http://jenkins.issdu-poc.com:9000 \
                 -Dsonar.login=52df3370e1896f58b3adb822cdb2f0350c8ac383
                 """
-                */
-                }
+                */                
             }
         }
         stage('Build image')
