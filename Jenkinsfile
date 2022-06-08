@@ -16,6 +16,12 @@ pipeline {
         {
             steps{
                 script{
+                /* 
+                使用 Jenkins 安裝 sonar-scanner (my-sonarqube-scanner)
+                連線到 sonarqube server (poc_sonarqube)
+                login secret 已經設定於 sonarqube server
+                */
+
                     def scannerHome = tool 'my-sonarqube-scanner'
                     withSonarQubeEnv('poc_sonarqube') {
                         sh """
@@ -25,7 +31,7 @@ pipeline {
                         """
                     }
                 }
-   
+                // 使用原本已安裝的 sonar-scanner , 此方法需代入 login secret 
                 /*
                 sh """
                 /home/sonar-scanner/bin/sonar-scanner \
