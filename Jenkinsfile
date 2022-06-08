@@ -16,7 +16,6 @@ pipeline {
         {
             steps{
                 script {
-                    def scannerHome = tool 'SonarScanner 4.0';
                     withSonarQubeEnv('poc_sonarqube') {
                        println ${env.SONAR_HOST_URL}
                     }
