@@ -14,16 +14,16 @@ pipeline {
         }
         stage('SonarQube analysis')
         {
-            environment {
-                SCANNER_HOME = tool 'SonarQubeScanner'
-            }
             steps{
+                script{
+                    def scannerHome = tool 'my-sonarqube-scanner'
+                }
                 withSonarQubeEnv('poc_sonarqube') {
-                sh """
-                $SCANNER_HOME/bin/sonar-scanner \
-                -Dsonar.projectKey=demo-nodejs \
-                -Dsonar.sources=./server.js
-                """
+                    sh """
+                    ${scannerHome}/bin/sonar-scanner \
+                    -Dsonar.projectKey=demo-nodejs \
+                    -Dsonar.sources=./server.js
+                    """
                 /*
                 sh """
                 /home/sonar-scanner/bin/sonar-scanner \
