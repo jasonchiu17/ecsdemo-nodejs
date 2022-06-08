@@ -74,7 +74,7 @@ pipeline {
 
                     
                     echo 'POD running image verion :'
-                    kubectl get pod -l app='ecsdemo-nodejs' -o jsonpath='{.items[*].spec.containers[*].image}'
+                    kubectl get pod -l app='ecsdemo-nodejs' -o=jsonpath='{range .items[?(@.status.phase=="Running")]}{.metadata.name}{"\t"}{.status.phase}{"\t"}{.spec.containers[0].image}{end}' |sort
                     """
                 }
             }
