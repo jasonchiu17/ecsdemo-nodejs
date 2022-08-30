@@ -13,22 +13,19 @@ pipeline {
   stages {
     stage('deploy info') {
         steps {
-            echo "deploy 232195323397.dkr.ecr.ap-northeast-1.amazonaws.com/${IMAGE_NAME}:${MAIN_VER}.${params.BUILD_NUMBE}"
+            echo "deploy 232195323397.dkr.ecr.ap-northeast-1.amazonaws.com/${IMAGE_NAME}:${MAIN_VER}.${params.BUILD_NUMBER}"
         }
     }
     stage('build image')
     {
         steps{
             script {
-                appImage = docker.build("${IMAGE_NAME}:${MAIN_VER}.${params.BUILD_NUMBE}")                    
+                appImage = docker.build("${IMAGE_NAME}:${MAIN_VER}.${params.BUILD_NUMBER}")                    
             }
         }           
     }  
     stage('push to AWS ecr')
     {
-        when { 
-            expression { BRANCH_NAME == 'develop' }
-        }   
         steps {
             script {
                 docker.withRegistry('https://232195323397.dkr.ecr.ap-northeast-1.amazonaws.com', 'ecr:ap-northeast-1:aws-issdu-credential') {
