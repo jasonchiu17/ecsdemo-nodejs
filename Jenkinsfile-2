@@ -13,14 +13,14 @@ pipeline {
   stages {
     stage('deploy info') {
         steps {
-            echo "deploy 232195323397.dkr.ecr.ap-northeast-1.amazonaws.com/${IMAGE_NAME}:${MAIN_VER}.${params.VERSION}"
+            echo "deploy 232195323397.dkr.ecr.ap-northeast-1.amazonaws.com/${IMAGE_NAME}:${MAIN_VER}.${params.BUILD_NUMBE}"
         }
     }
     stage('build image')
     {
         steps{
             script {
-                appImage = docker.build("${IMAGE_NAME}:${MAIN_VER}.${env.BUILD_NUMBER}")                    
+                appImage = docker.build("${IMAGE_NAME}:${MAIN_VER}.${params.BUILD_NUMBE}")                    
             }
         }           
     }  
