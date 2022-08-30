@@ -2,23 +2,48 @@ def firstName = null
 pipeline {
   // agent none
   agent { label 'jenkins-slave'}
+  environment { 
+    IMAGE_NAME = 'demo-nodejs'
+    MAIN_VER = '1.0'
+  }
   parameters { 
-      choice(name: 'VERSION', choices: ['1.0.2', '1.0.3', '1.0.4'], description: 'deploy version') 
-       
+      choice(name: 'BUILD_NUMBER', choices: ['97', '98', '99'], description: 'deploy version') 
+  
   }
   stages {
     stage('deploy info') {
         steps {
-            echo "deploy 232195323397.dkr.ecr.ap-northeast-1.amazonaws.com/demo-nodejs:${params.VERSION}"
+            echo "deploy 232195323397.dkr.ecr.ap-northeast-1.amazonaws.com/${IMAGE_NAME}:${MAIN_VER}.${params.VERSION}"
+        }
+    }
+    stage('build image')
+    {
+        steps{
+            script {
+                appImage = docker.build("${IMAGE_NAME}:${MAIN_VER}.${env.BUILD_NUMBER}")                    
+            }
+        }           
+    }  
+    stage('push to AWS ecr')
+    {
+        when { 
+            expression { BRANCH_NAME == 'develop' }
+        }   
+        steps {
+            script {
+                docker.withRegistry('https://232195323397.dkr.ecr.ap-northeast-1.amazonaws.com', 'ecr:ap-northeast-1:aws-issdu-credential') {
+                    appImage.push()
+                }
+            }
         }
     }
     stage('update demo-nodejs image version') {
       steps {
         sh """
-            kubectl get nodes
-            kubectl set image deployment ecsdemo-nodejs ecsdemo-nodejs=232195323397.dkr.ecr.ap-northeast-1.amazonaws.com/demo-nodejs:${params.VERSION} --record
-            kubectl get deployment -o wide | grep ecsdemo
-            kubectl rollout status deployment ecsdemo-nodejs
+            # kubectl get nodes
+            # kubectl set image deployment ecsdemo-nodejs ecsdemo-nodejs=232195323397.dkr.ecr.ap-northeast-1.amazonaws.com/demo-nodejs:${params.VERSION} --record
+            # kubectl get deployment -o wide | grep ecsdemo
+            # kubectl rollout status deployment ecsdemo-nodejs
         """
       }
     }
