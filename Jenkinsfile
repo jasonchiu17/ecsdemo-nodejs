@@ -12,9 +12,27 @@ pipeline {
                 echo "build ${IMAGE_NAME}:${MAIN_VER}.${env.BUILD_NUMBER}"
             }
         }
-        stage('SonarQuge analysis')
+        stage('SonarQube analysis')
         {
             steps{
+                script{
+                /* 
+                使用 Jenkins 安裝 sonar-scanner (my-sonarqube-scanner)
+                連線到 sonarqube server (poc_sonarqube)
+                login secret 已經設定於 sonarqube server
+                */
+
+                    def scannerHome = tool 'my-sonarqube-scanner'
+                    withSonarQubeEnv('poc_sonarqube') {
+                        sh """
+                        ${scannerHome}/bin/sonar-scanner \
+                        -Dsonar.projectKey=demo-nodejs \
+                        -Dsonar.sources=./server.js
+                        """
+                    }
+                }
+                // 使用原本已安裝的 sonar-scanner , 此方法需代入 login secret 
+                /*
                 sh """
                 /home/sonar-scanner/bin/sonar-scanner \
                 -Dsonar.projectKey=demo-nodejs \
@@ -22,9 +40,10 @@ pipeline {
                 -Dsonar.host.url=http://jenkins.issdu-poc.com:9000 \
                 -Dsonar.login=52df3370e1896f58b3adb822cdb2f0350c8ac383
                 """
+                */                
             }
         }
-        stage('build image')
+        stage('Build image')
         {
             steps{
                 script {
@@ -32,7 +51,7 @@ pipeline {
                 }
             }           
         }  
-        stage('push image to AWS ECR')
+        stage('Push image to AWS ECR')
         {
             steps {
                 script {
@@ -42,7 +61,7 @@ pipeline {
                 }
             }
         }
-        stage('deploy to dev EKS')
+        stage('Deploy to AWS EKS')
         {
             /*
             when { 
@@ -73,8 +92,8 @@ pipeline {
                     done;
 
                     
-                    echo 'POD running image verion :'
-                    kubectl get pod -l app='ecsdemo-nodejs' -o jsonpath='{.items[*].spec.containers[*].image}'
+                    echo 'POD running image version :'
+                    kubectl get pod -l app='ecsdemo-nodejs' -o=jsonpath='{range .items[?(@.status.phase=="Running")]}{.metadata.name}{"\t"}{.status.phase}{"\t"}{.spec.containers[0].image}{end}' |sort
                     """
                 }
             }
