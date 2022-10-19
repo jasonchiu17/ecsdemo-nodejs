@@ -92,7 +92,7 @@ pipeline {
                     done;
 
                     
-                    echo 'POD running image verion :'
+                    echo 'POD running image version :'
                     kubectl get pod -l app='ecsdemo-nodejs' -o=jsonpath='{range .items[?(@.status.phase=="Running")]}{.metadata.name}{"\t"}{.status.phase}{"\t"}{.spec.containers[0].image}{end}' |sort
                     """
                 }
